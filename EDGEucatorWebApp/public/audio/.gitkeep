@@ -1,0 +1,8 @@
+# Audio files folder
+# 
+# Place your audio files (WAV, MP3, etc.) here.
+# Files in this folder will be accessible at: /audio/filename.wav
+# 
+# Example usage in code:
+# await playAudioWithMouthMovement('/audio/your-file.wav', avatarControls.setMouthOpen);
+

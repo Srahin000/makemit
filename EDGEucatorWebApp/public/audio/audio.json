@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "soundFile": "C:\\Users\\hackuser\\EDGEucatorWebApp\\public\\audio\\audio.wav",
+    "duration": 8.00
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 1.88, "value": "X" },
+    { "start": 1.88, "end": 2.10, "value": "F" },
+    { "start": 2.10, "end": 2.17, "value": "C" },
+    { "start": 2.17, "end": 2.24, "value": "E" },
+    { "start": 2.24, "end": 2.38, "value": "F" },
+    { "start": 2.38, "end": 2.58, "value": "B" },
+    { "start": 2.58, "end": 2.74, "value": "D" },
+    { "start": 2.74, "end": 2.78, "value": "C" },
+    { "start": 2.78, "end": 3.18, "value": "B" },
+    { "start": 3.18, "end": 3.25, "value": "C" },
+    { "start": 3.25, "end": 3.89, "value": "B" },
+    { "start": 3.89, "end": 3.95, "value": "C" },
+    { "start": 3.95, "end": 4.36, "value": "B" },
+    { "start": 4.36, "end": 4.50, "value": "D" },
+    { "start": 4.50, "end": 4.64, "value": "B" },
+    { "start": 4.64, "end": 4.71, "value": "F" },
+    { "start": 4.71, "end": 5.06, "value": "B" },
+    { "start": 5.06, "end": 6.82, "value": "X" },
+    { "start": 6.82, "end": 6.97, "value": "B" },
+    { "start": 6.97, "end": 7.65, "value": "X" },
+    { "start": 7.65, "end": 7.90, "value": "B" },
+    { "start": 7.90, "end": 8.00, "value": "X" }
+  ]
+}
