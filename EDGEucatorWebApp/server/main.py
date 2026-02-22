@@ -15,6 +15,7 @@ import asyncio
 import base64
 import logging
 import os
+import platform
 import threading
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -23,6 +24,7 @@ import httpx
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from modes import AppMode, state_manager
@@ -41,9 +43,16 @@ ELEVENLABS_API_KEY  = os.getenv("ELEVENLABS_API_KEY")
 ELEVENLABS_VOICE_ID = os.getenv("ELEVENLABS_VOICE_ID", "p3JVGy12zi4oFZ7ogrTE")
 PICO_ACCESS_KEY     = os.getenv("PICO_ACCESS_KEY", "")
 
-# Resolve .ppn path relative to this file (works from any cwd)
-_HERE      = Path(__file__).parent
-PPN_PATH   = str(_HERE.parent / "harrypotter_pico_word" / "Harry-Potter_en_mac_v3_0_0.ppn")
+# Resolve .ppn path — auto-selects macOS vs Linux build unless overridden.
+# Set PPN_FILENAME env var to use a different .ppn (e.g. a Raspberry Pi build).
+_HERE = Path(__file__).parent
+_SYSTEM = platform.system().lower()
+_DEFAULT_PPN = (
+    "Harry-Potter_en_mac_v3_0_0.ppn"
+    if _SYSTEM == "darwin"
+    else "Harry-Potter_en_linux_v3_0_0.ppn"
+)
+PPN_PATH = str(_HERE.parent / "harrypotter_pico_word" / os.getenv("PPN_FILENAME", _DEFAULT_PPN))
 
 SYSTEM_PROMPT = (
     "You are Harry Potter. However, you are aware that you are Harry who lives in the "
@@ -292,8 +301,21 @@ async def chat(req: ChatRequest):
     return result
 
 
+# ── Serve built React frontend (production / Viam edge deployment) ────────────
+# Mount AFTER all API routes so /chat, /ws, etc. take precedence.
+# In dev (npm run dev), Vite's own server handles the frontend.
+_DIST = _HERE.parent / "dist"
+if _DIST.exists():
+    app.mount("/", StaticFiles(directory=str(_DIST), html=True), name="frontend")
+    logger.info(f"[main] Serving frontend from {_DIST}")
+else:
+    logger.info("[main] No dist/ found — frontend not served by FastAPI (use npm run dev)")
+
+
 # ── Entry point ───────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", "3001"))
-    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
+    # reload=False in production; set UVICORN_RELOAD=1 locally if you want hot-reload
+    reload = os.getenv("UVICORN_RELOAD", "0") == "1"
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=reload)
