@@ -337,8 +337,9 @@ def detection_thread(
 
             if mode == "PAN":
                 # Invert x: webcam is mirrored, so "hand right" = x decreasing
+                # Invert y: screen y increases downward, so hand up = y decreasing = pan up
                 d_pan_x = -(L8x - track.prev_x) * S["PAN_SENSITIVITY"]
-                d_pan_y = -(L8y - track.prev_y) * S["PAN_SENSITIVITY"]
+                d_pan_y =  (L8y - track.prev_y) * S["PAN_SENSITIVITY"]
 
             elif mode == "ZOOM_IN":
                 # 👍 Thumb Up → zoom in (decrease radius) each frame held

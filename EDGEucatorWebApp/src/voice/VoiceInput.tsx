@@ -10,7 +10,7 @@
  * Firefox requires the `media.webspeech.recognition.enable` flag.
  */
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 // Extend the window type for vendor-prefixed SpeechRecognition
 declare global {

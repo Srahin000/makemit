@@ -263,6 +263,80 @@ canvas {
   height: 100%;
 }
 
+/* ── Mode selector ───────────────────────────────────────────────────────── */
+.mode-selector {
+  position: fixed;
+  top: 3.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 0.4rem;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  border-radius: 999px;
+  padding: 0.3rem 0.4rem;
+  backdrop-filter: blur(8px);
+}
+
+.mode-btn {
+  padding: 0.3rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.mode-btn:hover {
+  color: #e2e8f0;
+  background: rgba(51, 65, 85, 0.6);
+}
+
+.mode-btn--active {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.5);
+  color: #a5b4fc;
+}
+
+/* ── Wake-word banner ────────────────────────────────────────────────────── */
+.wake-banner {
+  position: fixed;
+  top: 7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(124, 58, 237, 0.25);
+  border: 1px solid rgba(167, 139, 250, 0.5);
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: #ddd6fe;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  animation: wake-pop 0.2s ease;
+  white-space: nowrap;
+}
+
+.wake-banner__dismiss {
+  margin-left: 0.75rem;
+  font-size: 0.7rem;
+  color: #a78bfa;
+  opacity: 0.7;
+}
+
+@keyframes wake-pop {
+  from { opacity: 0; transform: translateX(-50%) scale(0.92); }
+  to   { opacity: 1; transform: translateX(-50%) scale(1); }
+}
+
 /* ── Gesture toggle button ───────────────────────────────────────────────── */
 .gesture-toggle-btn {
   position: fixed;
